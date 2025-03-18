@@ -18,7 +18,7 @@ public class AlumnoService {
     }
 
     public List<Alumno> findAll() {
-        return alumnoRepository.findAll();
+        return alumnoRepository.findAll().stream().filter(alumno -> alumno.getActivo() == 1).toList();
     }
 
     public Optional<Alumno> findById(String id) {
@@ -34,6 +34,7 @@ public class AlumnoService {
     public Optional<Alumno> update(String id, Alumno alumno) {
         Optional<Alumno> alumnoEncontrado = alumnoRepository.findById(id);
         if (alumnoEncontrado.isPresent()) {
+            alumno.setActivo(1);
             return Optional.of(alumnoRepository.save(alumno));
         }
         return Optional.empty();
